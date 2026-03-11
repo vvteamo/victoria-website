@@ -591,7 +591,7 @@
                         </div>
                     </div>
 
-                    <!-- Шаг 4.1: Форма торта (НОВЫЙ) -->
+                    <!-- Шаг 4.1: Форма торта -->
                     <div class="constructor-step" id="stepA-4-1" style="display: none;">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">4.1. Forme du gâteau</h4>
                         <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 15px;">
@@ -632,27 +632,44 @@
                     </div>
                 </div>
 
-                <!-- Путь Б: Загрузка фото -->
+                <!-- Путь Б: Загрузка фото (ИСПРАВЛЕННЫЙ) -->
                 <div id="pathB" class="constructor-path" style="display: none;">
                     <div style="max-width: 600px; margin: 0 auto;">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Proposez votre propre design</h4>
                         <p style="margin-bottom: 20px;">Téléchargez une photo de votre inspiration et ajoutez une description. Victoria l'étudiera et vous recontactera.</p>
                         
                         <div style="display: flex; flex-direction: column; gap: 15px;">
+                            <!-- Имя (обязательно) -->
                             <input type="text" id="upload-name" placeholder="Votre nom" required style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; font-family: 'Montserrat', sans-serif;">
                             
+                            <!-- Контакт (обязательно) -->
                             <div class="contact-input-wrapper">
                                 <div class="icons"><span>📞</span><span>✉️</span><span>💬</span></div>
                                 <input type="text" id="upload-contact" placeholder="Téléphone, E-mail ou WhatsApp" required>
                             </div>
+
+                            <!-- НОВОЕ: Количество гостей (обязательно) -->
+                            <div>
+                                <input type="number" id="upload-guests" min="6" placeholder="Nombre d'invités (minimum 6)" required style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; font-family: 'Montserrat', sans-serif;">
+                                <div id="upload-guests-error" class="error-message" style="color: #c00; font-size: 0.8rem; margin-top: 5px; display: none;">Minimum 6 personnes</div>
+                            </div>
+
+                            <!-- НОВОЕ: Дата события (обязательно) -->
+                            <div>
+                                <input type="date" id="upload-date" required style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; font-family: 'Montserrat', sans-serif;">
+                                <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 5px;">Pour une création sur mesure, laissez-nous au moins 48h.</p>
+                            </div>
                             
+                            <!-- Описание (необязательно) -->
                             <textarea id="upload-description" rows="3" placeholder="Décrivez votre idée (couleurs, thème, souhaits...)" style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 10px; font-family: 'Montserrat', sans-serif;"></textarea>
                             
+                            <!-- Загрузка фото (исправлен французский) -->
                             <div style="border: 2px dashed var(--gold-accent); padding: 20px; text-align: center; border-radius: 10px;">
-                                <input type="file" id="upload-photo" accept="image/*" style="margin-bottom: 10px;">
+                                <input type="file" id="upload-photo" accept="image/*" style="margin-bottom: 10px;" language="fr">
                                 <p style="font-size: 0.8rem; opacity: 0.6;">Formats acceptés: PNG, JPG (max 10 Mo)</p>
                             </div>
                             
+                            <!-- Согласие (исправлена опечатка) -->
                             <label style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem;">
                                 <input type="checkbox" id="upload-consent" required> J'accepte le traitement de mes données pour être recontacté.
                             </label>
@@ -769,14 +786,13 @@
                 guests: 0,
                 etages: '',
                 style: '',
-                shapeType: 'classic_circle', // значение по умолчанию
+                shapeType: 'classic_circle',
                 shapeDetails: '',
                 inscription: '',
                 details: '',
                 date: ''
             };
 
-            // Массив шагов (8 шагов)
             const stepsA = ['stepA-1', 'stepA-2', 'stepA-3', 'stepA-4', 'stepA-4-1', 'stepA-5', 'stepA-6', 'stepA-7'];
             function showStepA(index) {
                 stepsA.forEach((id, i) => {
@@ -786,7 +802,7 @@
             }
 
             function updateNavButtons(path, index) {
-                const totalSteps = path === 'A' ? 8 : 0; // pathB не имеет шагов
+                const totalSteps = path === 'A' ? 8 : 0;
                 if (path === 'A') {
                     prevBtn.style.visibility = index === 0 ? 'hidden' : 'visible';
                     if (index === totalSteps - 1) {
@@ -860,7 +876,6 @@
                     } else if (currentStepA === 3) {
                         nextBtn.disabled = !order.style;
                     } else if (currentStepA === 4) {
-                        // шаг формы – не блокируем, так как есть значение по умолчанию
                         nextBtn.disabled = false;
                     } else {
                         nextBtn.disabled = false;
@@ -868,7 +883,6 @@
                 }
             }
 
-            // Обработчики для кнопок-опций
             document.querySelectorAll('.constructor-option').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const parent = this.parentNode;
@@ -882,7 +896,6 @@
                             order.style = this.getAttribute('data-value');
                         } else if (currentStepA === 4 && this.classList.contains('shape-option')) {
                             order.shapeType = this.getAttribute('data-shape');
-                            // Показываем/скрываем дополнительные поля
                             document.getElementById('number-input-container').style.display = (order.shapeType === 'number') ? 'block' : 'none';
                             document.getElementById('other-shape-note').style.display = (order.shapeType === 'other') ? 'block' : 'none';
                         }
@@ -902,7 +915,6 @@
                 currentPath = 'B';
                 pathA.style.display = 'none';
                 pathB.style.display = 'block';
-                // Скрываем кнопки навигации конструктора, так как они не нужны
                 prevBtn.style.visibility = 'hidden';
                 nextBtn.style.display = 'none';
                 generateBtn.style.display = 'none';
@@ -939,7 +951,6 @@
                 }
             });
 
-            // --- Интеграция с бэкендом (путь А) ---
             window.generatedImages = [];
             window.selectedDesignIndex = 0;
 
@@ -953,7 +964,6 @@
                     return;
                 }
                 
-                // Проверка администратора (безлимит)
                 const cleanName = clientName ? clientName.trim() : '';
                 const cleanContact = clientContact ? clientContact.trim() : '';
                 const isAdmin = (cleanName === '7100243' && cleanContact === '7100243');
@@ -988,7 +998,6 @@
                     
                     order.date = date;
 
-                    // Собираем данные для генерации
                     const generationData = {
                         etages: order.etages || '1 étage',
                         style: order.style || 'Classique Chic',
@@ -1137,7 +1146,6 @@
                 }
             });
 
-            // Устанавливаем минимальную дату для календарей
             const today = new Date();
             const minDate = new Date(today);
             minDate.setDate(today.getDate() + 2);
@@ -1152,24 +1160,45 @@
             showStepA(0);
         })();
 
-        // --- Путь Б: загрузка фото ---
+        // --- Путь Б: загрузка фото (исправленный) ---
         const uploadBtn = document.getElementById('upload-submit');
         if (uploadBtn) {
             uploadBtn.addEventListener('click', async () => {
                 const name = document.getElementById('upload-name').value;
                 const contact = document.getElementById('upload-contact').value;
+                const guests = parseInt(document.getElementById('upload-guests').value);
+                const date = document.getElementById('upload-date').value;
                 const description = document.getElementById('upload-description').value;
                 const photo = document.getElementById('upload-photo').files[0];
                 const consent = document.getElementById('upload-consent').checked;
 
-                if (!name || !contact || !photo || !consent) {
-                    alert("Veuillez remplir tous les champs obligatoires, accepter le traitement des données et sélectionner une photo.");
+                if (!name || !contact || !guests || !date || !photo || !consent) {
+                    alert("Veuillez remplir tous les champs obligatoires (nom, contact, nombre d'invités, date, photo) et accepter le traitement des données.");
+                    return;
+                }
+
+                if (guests < 6) {
+                    document.getElementById('upload-guests-error').style.display = 'block';
+                    return;
+                } else {
+                    document.getElementById('upload-guests-error').style.display = 'none';
+                }
+
+                const selectedDate = new Date(date);
+                const today = new Date();
+                today.setHours(0,0,0,0);
+                const minDate = new Date(today);
+                minDate.setDate(today.getDate() + 2);
+                if (selectedDate < minDate) {
+                    alert("Veuillez choisir une date au moins 2 jours à l'avance.");
                     return;
                 }
 
                 const formData = new FormData();
                 formData.append('name', name);
                 formData.append('contact', contact);
+                formData.append('guests', guests);
+                formData.append('date', date);
                 formData.append('description', description);
                 formData.append('photo', photo);
 
@@ -1184,9 +1213,10 @@
 
                     if (response.ok) {
                         alert('Proposition envoyée avec succès ! Victoria va vous contacter.');
-                        // Очистить форму
                         document.getElementById('upload-name').value = '';
                         document.getElementById('upload-contact').value = '';
+                        document.getElementById('upload-guests').value = '';
+                        document.getElementById('upload-date').value = '';
                         document.getElementById('upload-description').value = '';
                         document.getElementById('upload-photo').value = '';
                         document.getElementById('upload-consent').checked = false;
