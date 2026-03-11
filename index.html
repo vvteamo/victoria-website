@@ -632,7 +632,7 @@
                     </div>
                 </div>
 
-                <!-- Путь Б: Загрузка фото (ИСПРАВЛЕННЫЙ) -->
+                <!-- Путь Б: Загрузка фото (ИСПРАВЛЕННЫЙ С MIN ДАТОЙ) -->
                 <div id="pathB" class="constructor-path" style="display: none;">
                     <div style="max-width: 600px; margin: 0 auto;">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Proposez votre propre design</h4>
@@ -648,28 +648,29 @@
                                 <input type="text" id="upload-contact" placeholder="Téléphone, E-mail ou WhatsApp" required>
                             </div>
 
-                            <!-- НОВОЕ: Количество гостей (обязательно) -->
+                            <!-- Количество гостей (обязательно) -->
                             <div>
                                 <input type="number" id="upload-guests" min="6" placeholder="Nombre d'invités (minimum 6)" required style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; font-family: 'Montserrat', sans-serif;">
                                 <div id="upload-guests-error" class="error-message" style="color: #c00; font-size: 0.8rem; margin-top: 5px; display: none;">Minimum 6 personnes</div>
                             </div>
 
-                            <!-- НОВОЕ: Дата события (обязательно) -->
+                            <!-- Дата события (обязательно) с ограничением min (будет установлено через JS) -->
                             <div>
-                                <input type="date" id="upload-date" required style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; font-family: 'Montserrat', sans-serif;">
+                                <input type="date" id="upload-date" required 
+                                       style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; font-family: 'Montserrat', sans-serif;">
                                 <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 5px;">Pour une création sur mesure, laissez-nous au moins 48h.</p>
                             </div>
                             
                             <!-- Описание (необязательно) -->
                             <textarea id="upload-description" rows="3" placeholder="Décrivez votre idée (couleurs, thème, souhaits...)" style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 10px; font-family: 'Montserrat', sans-serif;"></textarea>
                             
-                            <!-- Загрузка фото (исправлен французский) -->
+                            <!-- Загрузка фото -->
                             <div style="border: 2px dashed var(--gold-accent); padding: 20px; text-align: center; border-radius: 10px;">
                                 <input type="file" id="upload-photo" accept="image/*" style="margin-bottom: 10px;" language="fr">
                                 <p style="font-size: 0.8rem; opacity: 0.6;">Formats acceptés: PNG, JPG (max 10 Mo)</p>
                             </div>
                             
-                            <!-- Согласие (исправлена опечатка) -->
+                            <!-- Согласие -->
                             <label style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem;">
                                 <input type="checkbox" id="upload-consent" required> J'accepte le traitement de mes données pour être recontacté.
                             </label>
@@ -1156,6 +1157,12 @@
             
             const dateInputA = document.getElementById('event-date-a');
             if (dateInputA) dateInputA.setAttribute('min', minDateString);
+
+            // Устанавливаем минимальную дату для поля upload-date (сегодня + 2 дня)
+            const uploadDateInput = document.getElementById('upload-date');
+            if (uploadDateInput) {
+                uploadDateInput.setAttribute('min', minDateString);
+            }
 
             showStepA(0);
         })();
