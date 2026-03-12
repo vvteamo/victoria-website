@@ -46,12 +46,12 @@
             padding: 0;
             box-sizing: border-box;
             scroll-behavior: smooth;
-            -webkit-tap-highlight-color: transparent; /* Убирает синее мигание при клике на мобильных */
+            -webkit-tap-highlight-color: transparent;
         }
         
         html, body {
             max-width: 100%;
-            overflow-x: hidden; /* Запрет горизонтального скролла и дрожания */
+            overflow-x: hidden;
         }
 
         body {
@@ -118,7 +118,6 @@
             transition: all 0.3s ease;
         }
         
-        /* Адаптация шапки для мобильных */
         @media (max-width: 768px) {
             .logo-img { height: 50px; }
             nav ul { gap: 15px; }
@@ -145,7 +144,6 @@
             transform: translateY(0);
         }
         
-        /* Главный экран: 100dvh спасает от дергания на смартфонах */
         #accueil {
             height: 100vh; 
             height: 100dvh; 
@@ -225,20 +223,26 @@
         
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            /* Изменил на 250px для гарантии работы на самых узких экранах */
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
         }
         
         .img-box {
-            aspect-ratio: 1/1;
+            /* ЖЕЛЕЗОБЕТОННЫЕ КВАДРАТЫ ДЛЯ ЛЮБОГО МОБИЛЬНИКА */
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%;
             overflow: hidden;
             background: #e0ddd5;
             border-radius: 4px;
             cursor: pointer;
-            position: relative;
         }
         
         .img-box img {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -310,7 +314,7 @@
             justify-content: center;
             align-items: center;
             z-index: 3000;
-            touch-action: none; /* Блокируем стандартный скролл при открытой галерее */
+            touch-action: none;
         }
         
         #slider-img {
@@ -518,11 +522,11 @@
         <section id="creations" class="container">
             <h2>Mes Créations</h2>
             <div class="filter-nav">
-                <button class="filter-btn active" onclick="filterGallery('all')">Tout</button>
-                <button class="filter-btn" onclick="filterGallery('mariage')">Mariage & Couture</button>
-                <button class="filter-btn" onclick="filterGallery('classique')">Classique</button>
-                <button class="filter-btn" onclick="filterGallery('anniversaire')">Anniversaire</button>
-                <button class="filter-btn" onclick="filterGallery('dreams')">L'Atelier des Rêves</button>
+                <button class="filter-btn active" onclick="filterGallery('all', this)">Tout</button>
+                <button class="filter-btn" onclick="filterGallery('mariage', this)">Mariage & Couture</button>
+                <button class="filter-btn" onclick="filterGallery('classique', this)">Classique</button>
+                <button class="filter-btn" onclick="filterGallery('anniversaire', this)">Anniversaire</button>
+                <button class="filter-btn" onclick="filterGallery('dreams', this)">L'Atelier des Rêves</button>
             </div>
             <div class="gallery-grid">
                 <div class="gallery-item mariage"><div class="img-box" onclick="openSlider(['img/wedding-1-1.png', 'img/wedding-1-2.png', 'img/wedding-1-3.png'])"><img src="img/wedding-1-1.png" alt="Rêve de Dentelle"></div><p class="item-title">Rêve de Dentelle</p></div>
@@ -781,11 +785,17 @@
         
         let currentImages = []; let currentIndex = 0;
         
-        function filterGallery(category) { 
+        // --- ИДЕАЛЬНЫЙ ФИЛЬТР БЕЗ ОШИБОК НА ТЕЛЕФОНЕ ---
+        function filterGallery(category, btnElement) { 
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); 
-            if(event) event.currentTarget.classList.add('active'); 
+            if(btnElement) btnElement.classList.add('active'); 
+            
             document.querySelectorAll('.gallery-item').forEach(item => { 
-                if (category === 'all' || item.classList.contains(category)) item.style.display = 'block'; else item.style.display = 'none'; 
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = ''; // Сбрасываем дисплей на дефолт (возвращает блок или флекс)
+                } else {
+                    item.style.display = 'none'; 
+                }
             }); 
         }
         
@@ -808,7 +818,7 @@
             document.body.style.overflow = 'auto'; 
         }
 
-        // --- ЛОГИКА СВАЙПОВ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ ---
+        // --- ЛОГИКА СВАЙПОВ ДЛЯ ГАЛЕРЕИ ---
         let touchStartX = 0;
         let touchEndX = 0;
         const sliderOverlay = document.getElementById('slider-overlay');
@@ -824,12 +834,12 @@
 
         function handleSwipe() {
             if (!currentImages || currentImages.length === 0) return;
-            const swipeThreshold = 50; // Минимальная длина свайпа в пикселях
+            const swipeThreshold = 50; 
             if (touchEndX < touchStartX - swipeThreshold) {
-                changeSlide(1); // Свайп влево -> следующая
+                changeSlide(1); 
             }
             if (touchEndX > touchStartX + swipeThreshold) {
-                changeSlide(-1); // Свайп вправо -> предыдущая
+                changeSlide(-1); 
             }
         }
 
