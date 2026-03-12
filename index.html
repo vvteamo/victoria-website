@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Victoria | Haute Pâtisserie Nice - Gâteaux de Mariage & Créations sur Mesure</title>
     <meta name="description" content="Découvrez l'excellence de Victoria, Maître Pâtissier à Nice. Gâteaux de mariage couture, créations personnalisées et pâtisserie artisanale haut de gamme sur la Côte d'Azur.">
@@ -221,22 +221,21 @@
             border-color: var(--text-color);
         }
         
-        /* ЖЕЛЕЗОБЕТОННАЯ СЕТКА ГАЛЕРЕИ */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Строго 3 колонки на ПК */
+            grid-template-columns: repeat(3, 1fr); 
             gap: 30px;
         }
         
         @media (max-width: 900px) {
             .gallery-grid {
-                grid-template-columns: repeat(2, 1fr); /* 2 колонки на планшетах */
+                grid-template-columns: repeat(2, 1fr); 
             }
         }
         
         @media (max-width: 600px) {
             .gallery-grid {
-                grid-template-columns: 1fr; /* 1 колонка на телефонах */
+                grid-template-columns: 1fr; 
             }
         }
         
@@ -314,7 +313,7 @@
             border: none;
         }
         
-        /* СЛАЙДЕР И ГАЛЕРЕЯ */
+        /* СЛАЙДЕР И ГАЛЕРЕЯ (Обновлено для зума) */
         #slider-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -325,22 +324,25 @@
             justify-content: center;
             align-items: center;
             z-index: 3000;
-            touch-action: none;
+            /* Разрешаем скролл, если картинка увеличена */
+            overflow: auto;
         }
         
         #slider-img {
             max-width: 95%;
-            max-height: 75vh;
+            max-height: 80vh;
             border-radius: 4px;
             object-fit: contain;
-            user-select: none;
-            -webkit-user-select: none;
+            margin: auto; /* Центрируем при зуме */
+            transition: transform 0.2s ease;
         }
         
         .slider-nav {
             margin-top: 20px;
             display: flex;
             gap: 40px;
+            position: fixed;
+            bottom: 20px;
         }
         
         .nav-arrow {
@@ -350,16 +352,25 @@
             user-select: none;
             -webkit-user-select: none;
             padding: 10px 20px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
         }
         
         .close-slider {
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 25px;
             color: #fff;
             font-size: 3rem;
             cursor: pointer;
             z-index: 3010;
+            background: rgba(0,0,0,0.5);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
 
         /* КОНСТРУКТОР */
@@ -813,7 +824,6 @@
             currentImages = imgs; currentIndex = 0; 
             document.getElementById('slider-img').src = currentImages[currentIndex]; 
             document.getElementById('slider-overlay').style.display = 'flex'; 
-            document.body.style.overflow = 'hidden'; 
         }
         
         function changeSlide(dir) { 
@@ -825,33 +835,46 @@
         
         function closeSlider() { 
             document.getElementById('slider-overlay').style.display = 'none'; 
-            document.body.style.overflow = 'auto'; 
         }
 
-        // --- ЛОГИКА СВАЙПОВ ДЛЯ ГАЛЕРЕИ ---
+        // --- УМНАЯ ЛОГИКА СВАЙПОВ: НЕ КОНФЛИКТУЕТ С ЗУМОМ ---
         let touchStartX = 0;
+        let touchStartY = 0;
         let touchEndX = 0;
+        let touchEndY = 0;
+        let isZooming = false;
         const sliderOverlay = document.getElementById('slider-overlay');
 
         sliderOverlay.addEventListener('touchstart', e => {
+            // Если пальцев больше одного - это щипок (зум), свайп отменяем
+            if (e.touches.length > 1) {
+                isZooming = true;
+                return;
+            }
+            isZooming = false;
             touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
         }, {passive: true});
 
         sliderOverlay.addEventListener('touchend', e => {
+            // Если был зум или остались еще пальцы на экране - ничего не делаем
+            if (isZooming || e.touches.length > 0) return;
+            
             touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
+            touchEndY = e.changedTouches[0].screenY;
+            
+            let diffX = touchStartX - touchEndX;
+            let diffY = touchStartY - touchEndY;
+            
+            // Если сдвиг по горизонтали больше чем по вертикали и больше 50px (четкий горизонтальный свайп)
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                if (diffX > 0) {
+                    changeSlide(1); // Свайп влево -> следующая картинка
+                } else {
+                    changeSlide(-1); // Свайп вправо -> предыдущая картинка
+                }
+            }
         }, {passive: true});
-
-        function handleSwipe() {
-            if (!currentImages || currentImages.length === 0) return;
-            const swipeThreshold = 50; 
-            if (touchEndX < touchStartX - swipeThreshold) {
-                changeSlide(1); 
-            }
-            if (touchEndX > touchStartX + swipeThreshold) {
-                changeSlide(-1); 
-            }
-        }
 
         (function() {
             const pathABtns = document.querySelectorAll('#pathA-btn, #pathB-btn');
@@ -1146,7 +1169,7 @@
                              onclick="openSlider(window.generatedImages); changeSlide(${index});">
                         
                         <p style="margin-top: 10px; font-size: 0.9rem; font-weight: 600; color: var(--gold-accent);">
-                            ${index === 0 ? "Option 1 : Votre design" : "Option 2 : Proposition de l'Atelier"}
+                            ${index === 0 ? 'Option 1 : Votre design' : 'Option 2 : Proposition de l\\'Atelier'}
                         </p>
                         <p style="font-size: 0.7rem; opacity: 0.6; margin-bottom: 10px;">(Cliquez sur l'image pour zoomer)</p>
                         
