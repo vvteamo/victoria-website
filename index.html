@@ -516,7 +516,6 @@
             </div>
         </section>
 
-        <!-- ========== КОНСТРУКТОР / ЗАКАЗ ========== -->
         <section class="container" style="padding-top: 0;">
             <div class="info-steps">
                 <div class="step-item">
@@ -550,9 +549,7 @@
                     <button id="pathB-btn" class="btn" style="background: transparent; border: 1px solid var(--text-color); color: var(--text-color); padding: 12px 25px;">2. Proposer une photo</button>
                 </div>
 
-                <!-- Путь А: Пошаговый конструктор -->
                 <div id="pathA" class="constructor-path">
-                    <!-- Шаг 1: Тип события -->
                     <div class="constructor-step" id="stepA-1">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">1. Type d'événement</h4>
                         <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
@@ -565,7 +562,6 @@
                         </div>
                     </div>
 
-                    <!-- Шаг 2: Количество гостей -->
                     <div class="constructor-step" id="stepA-2" style="display: none;">
                         <h4 style="font-size: 1.3rem; margin-bottom: 10px;">2. Nombre d'invités</h4>
                         <p style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 15px;">Nos créations sur mesure sont conçues pour les réunions de 6 personnes et plus.</p>
@@ -573,13 +569,11 @@
                         <div id="guests-error" class="error-message" style="color: #c00; font-size: 0.8rem; margin-top: 10px; display: none;">Les commandes sont acceptées à partir de 6 personnes</div>
                     </div>
 
-                    <!-- Шаг 3: Количество ярусов -->
                     <div class="constructor-step" id="stepA-3" style="display: none;">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">3. Nombre d'étages</h4>
                         <div class="etages-options" id="etages-options" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;"></div>
                     </div>
 
-                    <!-- Шаг 4: Визуальный стиль -->
                     <div class="constructor-step" id="stepA-4" style="display: none;">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">4. Style visuel</h4>
                         <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
@@ -591,7 +585,6 @@
                         </div>
                     </div>
 
-                    <!-- Шаг 4.1: Форма торта -->
                     <div class="constructor-step" id="stepA-4-1" style="display: none;">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">4.1. Forme du gâteau</h4>
                         <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 15px;">
@@ -601,30 +594,25 @@
                             <button class="constructor-option shape-option" data-shape="number">Chiffre (ex: 18, 30, 50)</button>
                             <button class="constructor-option shape-option" data-shape="other">Autre forme</button>
                         </div>
-                        <!-- Поле для ввода цифры (изначально скрыто) -->
                         <div id="number-input-container" style="display: none; margin-top: 15px;">
                             <input type="text" id="number-value" placeholder="Entrez le chiffre (ex: 30)" style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; font-family: 'Montserrat', sans-serif;">
                         </div>
-                        <!-- Пояснение для "Autre forme" (изначально скрыто) -->
                         <div id="other-shape-note" style="display: none; margin-top: 15px;">
                             <p style="font-size: 0.9rem; opacity: 0.7;">Décrivez la forme souhaitée dans le champ "Détails pour le Chef" à l'étape suivante. (Les formes complexes peuvent ne pas être parfaitement reproduites.)</p>
                         </div>
                     </div>
 
-                    <!-- Шаг 5: Надпись (упрощённый, без загрузки) -->
                     <div class="constructor-step" id="stepA-5" style="display: none;">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">5. Inscription</h4>
                         <p style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 15px;">Souhaitez-vous une inscription sur le gâteau ?</p>
                         <input type="text" id="inscription-text" placeholder="Texte de l'inscription (optionnel)" style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; font-family: 'Montserrat', sans-serif;">
                     </div>
 
-                    <!-- Шаг 6: Детали для Шефа -->
                     <div class="constructor-step" id="stepA-6" style="display: none;">
                         <h4 style="font-size: 1.3rem; margin-bottom: 10px;">6. Détails pour le Chef</h4>
                         <textarea id="details-input" rows="3" placeholder="Décrivez vos souhaits (couleur, décors, etc.)" style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 10px; font-family: 'Montserrat', sans-serif; resize: vertical;"></textarea>
                     </div>
 
-                    <!-- Шаг 7: Дата события -->
                     <div class="constructor-step" id="stepA-7" style="display: none;">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">7. Date de l'événement</h4>
                         <input type="date" id="event-date-a" class="event-date-input" style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; font-family: 'Montserrat', sans-serif;">
@@ -632,45 +620,37 @@
                     </div>
                 </div>
 
-                <!-- Путь Б: Загрузка фото (ИСПРАВЛЕННЫЙ С MIN ДАТОЙ) -->
                 <div id="pathB" class="constructor-path" style="display: none;">
                     <div style="max-width: 600px; margin: 0 auto;">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Proposez votre propre design</h4>
                         <p style="margin-bottom: 20px;">Téléchargez une photo de votre inspiration et ajoutez une description. Victoria l'étudiera et vous recontactera.</p>
                         
                         <div style="display: flex; flex-direction: column; gap: 15px;">
-                            <!-- Имя (обязательно) -->
                             <input type="text" id="upload-name" placeholder="Votre nom" required style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; font-family: 'Montserrat', sans-serif;">
                             
-                            <!-- Контакт (обязательно) -->
                             <div class="contact-input-wrapper">
                                 <div class="icons"><span>📞</span><span>✉️</span><span>💬</span></div>
                                 <input type="text" id="upload-contact" placeholder="Téléphone, E-mail ou WhatsApp" required>
                             </div>
 
-                            <!-- Количество гостей (обязательно) -->
                             <div>
                                 <input type="number" id="upload-guests" min="6" placeholder="Nombre d'invités (minimum 6)" required style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; font-family: 'Montserrat', sans-serif;">
                                 <div id="upload-guests-error" class="error-message" style="color: #c00; font-size: 0.8rem; margin-top: 5px; display: none;">Minimum 6 personnes</div>
                             </div>
 
-                            <!-- Дата события (обязательно) с ограничением min (будет установлено через JS) -->
                             <div>
                                 <input type="date" id="upload-date" required 
                                        style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; font-family: 'Montserrat', sans-serif;">
                                 <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 5px;">Pour une création sur mesure, laissez-nous au moins 48h.</p>
                             </div>
                             
-                            <!-- Описание (необязательно) -->
                             <textarea id="upload-description" rows="3" placeholder="Décrivez votre idée (couleurs, thème, souhaits...)" style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 10px; font-family: 'Montserrat', sans-serif;"></textarea>
                             
-                            <!-- Загрузка фото -->
                             <div style="border: 2px dashed var(--gold-accent); padding: 20px; text-align: center; border-radius: 10px;">
                                 <input type="file" id="upload-photo" accept="image/*" style="margin-bottom: 10px;" language="fr">
                                 <p style="font-size: 0.8rem; opacity: 0.6;">Formats acceptés: PNG, JPG (max 10 Mo)</p>
                             </div>
                             
-                            <!-- Согласие -->
                             <label style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem;">
                                 <input type="checkbox" id="upload-consent" required> J'accepte le traitement de mes données pour être recontacté.
                             </label>
@@ -680,7 +660,6 @@
                     </div>
                 </div>
 
-                <!-- Единая анкета для пути А (контактные данные) -->
                 <div id="contact-form" style="display: none; margin-top: 40px; padding: 20px; background: rgba(255,255,255,0.5); border-radius: 10px;">
                     <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Vos coordonnées</h4>
                     <div style="display: flex; flex-direction: column; gap: 15px;">
@@ -695,22 +674,21 @@
                     </div>
                 </div>
 
-                <!-- Информация о лимите -->
                 <div id="limit-info" class="limit-info">
                     💡 3 générations gratuites par jour. Contactez-nous pour plus de designs.
                 </div>
 
-                <!-- Кнопки навигации для пути А -->
                 <div style="display: flex; justify-content: space-between; margin-top: 30px; gap: 10px;">
                     <button id="prev-btn" class="btn" style="background: transparent; border: 1px solid var(--text-color); color: var(--text-color); padding: 12px 25px; visibility: hidden;">← Retour</button>
                     <button id="next-btn" class="btn" style="background: var(--text-color); padding: 12px 25px;">Suivant →</button>
                     <button id="generate-btn" class="btn" style="background: var(--gold-accent); padding: 12px 25px; display: none;">Générer mon design</button>
                     <button id="send-btn" class="btn" style="background: var(--gold-accent); padding: 12px 25px; display: none;">Envoyer la commande à l'Atelier</button>
                 </div>
+                <div id="loader-msg" style="display: none; text-align: center; font-size: 0.85rem; color: var(--gold-accent); margin-top: 20px; font-style: italic;">
+                    ⏳ Génération de votre design en cours...<br>Cela peut prendre 1 à 3 minutes, veuillez patienter.
+                </div>
             </div>
         </section>
-        <!-- ========== КОНЕЦ КОНСТРУКТОРА ========== -->
-
         <section id="testimonials" class="container">
             <h2>Témoignages</h2>
             <div class="testimonials-grid">
@@ -1014,6 +992,8 @@
 
                     generateBtn.textContent = 'Génération en cours...';
                     generateBtn.disabled = true;
+                    // Показываем текст с таймером
+                    if(document.getElementById('loader-msg')) document.getElementById('loader-msg').style.display = 'block';
 
                     try {
                         const response = await fetch('https://victoria-cake-api.onrender.com/generate', {
@@ -1046,6 +1026,8 @@
                     } finally {
                         generateBtn.textContent = 'Générer mon design';
                         generateBtn.disabled = false;
+                        // Прячем текст с таймером
+                        if(document.getElementById('loader-msg')) document.getElementById('loader-msg').style.display = 'none';
                     }
                 }
             });
@@ -1073,7 +1055,11 @@
                             Choisir ce design
                         </label>
                     </div>
-                `).join('');
+                `).join('') + `
+                    <div style="grid-column: 1 / -1; text-align: center; margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-gold-light); font-size: 0.7rem; opacity: 0.7; line-height: 1.5;">
+                        ⚖️ <strong>Propriété intellectuelle :</strong> Ces croquis numériques sont la propriété exclusive de l'Atelier Victoria. Ils sont générés uniquement pour visualiser votre future commande et ne peuvent être utilisés, reproduits ou transmis à des tiers (ni à d'autres pâtissiers) sans autorisation écrite.
+                    </div>
+                `;
 
                 document.querySelectorAll('input[name="selected-design"]').forEach(radio => {
                     radio.addEventListener('change', (e) => {
