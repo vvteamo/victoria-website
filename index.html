@@ -1135,27 +1135,30 @@
                     resultDiv.id = 'generation-results';
                     resultDiv.style.marginTop = '20px';
                     resultDiv.style.display = 'grid';
-                    resultDiv.style.gridTemplateColumns = '1fr 1fr';
-                    resultDiv.style.gap = '15px';
+                    resultDiv.style.gridTemplateColumns = window.innerWidth <= 600 ? '1fr' : '1fr 1fr';
+                    resultDiv.style.gap = '20px';
                     document.querySelector('.constructor-wrapper').appendChild(resultDiv);
                 }
 
                 resultDiv.innerHTML = images.map((img, index) => `
-                    <div style="text-align: center;">
-                        <img src="${img}" style="width: 100%; border-radius: 10px;" alt="Design ${index+1}">
-                        <p style="margin-top: 5px; font-size: 0.8rem;">
-                            ${index === 0 ? 'Votre design' : 'Proposition de l\'Atelier'}
+                    <div style="text-align: center; background: var(--card-bg); padding: 15px; border-radius: 15px; border: 1px solid var(--border-gold-light);">
+                        <img src="${img}" style="width: 100%; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" alt="Design ${index+1}" 
+                             onclick="openSlider(window.generatedImages); changeSlide(${index});">
+                        
+                        <p style="margin-top: 10px; font-size: 0.9rem; font-weight: 600; color: var(--gold-accent);">
+                            ${index === 0 ? 'Option 1 : Votre design' : 'Option 2 : Proposition de l\\'Atelier'}
                         </p>
-                        <label style="display: flex; align-items: center; justify-content: center; gap: 5px; margin-top: 5px;">
-                            <input type="radio" name="selected-design" value="${index}" ${index === 0 ? 'checked' : ''}>
-                            Choisir ce design
+                        <p style="font-size: 0.7rem; opacity: 0.6; margin-bottom: 10px;">(Cliquez sur l'image pour zoomer)</p>
+                        
+                        <label style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: 5px; padding: 10px 20px; background: var(--bg-color); border-radius: 30px; cursor: pointer; border: 1px solid var(--border-light);">
+                            <input type="radio" name="selected-design" value="${index}" ${index === 0 ? 'checked' : ''} style="transform: scale(1.2);">
+                            <span style="font-size: 0.85rem; font-weight: 600;">Choisir ce design</span>
                         </label>
                     </div>
                 `).join('') + `
-                    <div style="grid-column: 1 / -1; text-align: center; margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-gold-light); font-size: 0.7rem; opacity: 0.7; line-height: 1.5;">
-                        ⚖️ <strong>Propriété intellectuelle :</strong> Ces croquis numériques sont la propriété exclusive de l'Atelier Victoria. Ils sont générés uniquement pour visualiser votre future commande et ne peuvent être utilisés, reproduits ou transmis à des tiers (ni à d'autres pâtissiers) sans autorisation écrite.
-                        <br><br>
-                        ⚠️ <strong>Note :</strong> L'intelligence artificielle peut parfois simplifier ou omettre une partie du texte sur l'esquisse. Ne vous inquiétez pas, notre Chef réalisera votre inscription personnalisée avec une précision parfaite sur le vrai gâteau.
+                    <div style="grid-column: 1 / -1; text-align: center; margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-gold-light); font-size: 0.75rem; opacity: 0.8; line-height: 1.6; background: rgba(176, 141, 87, 0.05); padding: 15px; border-radius: 10px;">
+                        ⚖️ <strong>Propriété intellectuelle :</strong> Ces croquis numériques sont la propriété exclusive de l'Atelier Victoria.<br><br>
+                        ⚠️ <strong>Note :</strong> L'intelligence artificielle peut parfois simplifier ou omettre une partie du texte. Ne vous inquiétez pas, notre Chef réalisera votre inscription avec une précision parfaite sur le vrai gâteau.
                     </div>
                 `;
 
@@ -1177,7 +1180,7 @@
                     return;
                 }
 
-                const designChoice = window.selectedDesignIndex === 0 ? 'Votre design' : 'Proposition de l\'Atelier';
+                const designChoice = window.selectedDesignIndex === 0 ? 'Option 1' : 'Option 2';
                 const images = window.generatedImages || [];
                 const selectedImage = images[window.selectedDesignIndex];
                 
