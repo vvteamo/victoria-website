@@ -27,7 +27,7 @@
             --card-bg: rgba(255,255,255,0.3);
             --border-light: rgba(0,0,0,0.05);
             --border-gold-light: rgba(176, 141, 87, 0.2);
-            --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: all 0.3s ease;
         }
 
         /* ========== ТЁМНАЯ ТЕМА ========== */
@@ -132,27 +132,13 @@
             nav a { font-size: 0.6rem; font-weight: 600; }
         }
         
+        /* БРОНЕБОЙНЫЕ СЕКЦИИ (Больше никакой невидимости) */
         section {
             padding: 100px 0;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: var(--transition);
+            opacity: 1; /* Всегда видим */
+            transform: none; /* Никаких сдвигов */
         }
         
-        section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        #accueil {
-            height: 100vh; 
-            height: 100dvh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            text-align: center;
-        }
-
         h2 {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
@@ -221,21 +207,22 @@
             border-color: var(--text-color);
         }
         
+        /* ЖЕЛЕЗОБЕТОННАЯ СЕТКА ГАЛЕРЕИ */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); 
+            grid-template-columns: repeat(3, 1fr); /* 3 колонки на ПК */
             gap: 30px;
         }
         
         @media (max-width: 900px) {
             .gallery-grid {
-                grid-template-columns: repeat(2, 1fr); 
+                grid-template-columns: repeat(2, 1fr); /* 2 колонки на планшетах */
             }
         }
         
         @media (max-width: 600px) {
             .gallery-grid {
-                grid-template-columns: 1fr; 
+                grid-template-columns: 1fr; /* 1 колонка на телефонах */
             }
         }
         
@@ -256,7 +243,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: var(--transition);
+            transition: transform 0.3s ease;
         }
         
         .item-title {
@@ -313,28 +300,27 @@
             border: none;
         }
         
-        /* СЛАЙДЕР И ГАЛЕРЕЯ (Обновлено для зума) */
+        /* СЛАЙДЕР И ГАЛЕРЕЯ (Идеально для зума) */
         #slider-overlay {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
+            background: rgba(0,0,0,0.98);
             display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 3000;
-            /* Разрешаем скролл, если картинка увеличена */
-            overflow: auto;
+            overflow: auto; /* Позволяет скроллить при сильном увеличении */
         }
         
         #slider-img {
-            max-width: 95%;
+            max-width: 100%;
             max-height: 80vh;
             border-radius: 4px;
             object-fit: contain;
-            margin: auto; /* Центрируем при зуме */
-            transition: transform 0.2s ease;
+            margin: auto;
+            /* Убрали запрет на зум! */
         }
         
         .slider-nav {
@@ -349,8 +335,6 @@
             color: #fff;
             font-size: 2.5rem;
             cursor: pointer;
-            user-select: none;
-            -webkit-user-select: none;
             padding: 10px 20px;
             background: rgba(0,0,0,0.5);
             border-radius: 50%;
@@ -503,7 +487,7 @@
     </header>
 
     <main>
-        <section id="accueil" style="opacity:1; transform:none;">
+        <section id="accueil" style="height: 100vh; height: 100dvh; display: flex; align-items: center; justify-content: center; text-align: center;">
             <div>
                 <h1 style="font-family:'Playfair Display'; font-size:3.5rem;">Atelier Pâtisserie Nice</h1>
                 <p style="letter-spacing:4px; text-transform:uppercase; font-size:0.9rem; margin-top:10px;">Par Victoria • Haute Pâtisserie sur mesure</p>
@@ -802,10 +786,8 @@
     </div>
 
     <script>
-        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); }); }, { threshold: 0.1 });
-        document.querySelectorAll('section').forEach(s => observer.observe(s));
-        
-        let currentImages = []; let currentIndex = 0;
+        let currentImages = []; 
+        let currentIndex = 0;
         
         function filterGallery(category, btnElement) { 
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); 
@@ -821,7 +803,8 @@
         }
         
         function openSlider(imgs) { 
-            currentImages = imgs; currentIndex = 0; 
+            currentImages = imgs; 
+            currentIndex = 0; 
             document.getElementById('slider-img').src = currentImages[currentIndex]; 
             document.getElementById('slider-overlay').style.display = 'flex'; 
         }
@@ -837,41 +820,36 @@
             document.getElementById('slider-overlay').style.display = 'none'; 
         }
 
-        // --- УМНАЯ ЛОГИКА СВАЙПОВ: НЕ КОНФЛИКТУЕТ С ЗУМОМ ---
+        // УМНЫЕ СВАЙПЫ С ПОДДЕРЖКОЙ ЗУМА
         let touchStartX = 0;
         let touchStartY = 0;
-        let touchEndX = 0;
-        let touchEndY = 0;
         let isZooming = false;
         const sliderOverlay = document.getElementById('slider-overlay');
 
         sliderOverlay.addEventListener('touchstart', e => {
-            // Если пальцев больше одного - это щипок (зум), свайп отменяем
             if (e.touches.length > 1) {
                 isZooming = true;
                 return;
             }
             isZooming = false;
-            touchStartX = e.changedTouches[0].screenX;
-            touchStartY = e.changedTouches[0].screenY;
+            touchStartX = e.touches[0].screenX;
+            touchStartY = e.touches[0].screenY;
         }, {passive: true});
 
         sliderOverlay.addEventListener('touchend', e => {
-            // Если был зум или остались еще пальцы на экране - ничего не делаем
             if (isZooming || e.touches.length > 0) return;
             
-            touchEndX = e.changedTouches[0].screenX;
-            touchEndY = e.changedTouches[0].screenY;
+            let touchEndX = e.changedTouches[0].screenX;
+            let touchEndY = e.changedTouches[0].screenY;
             
             let diffX = touchStartX - touchEndX;
             let diffY = touchStartY - touchEndY;
             
-            // Если сдвиг по горизонтали больше чем по вертикали и больше 50px (четкий горизонтальный свайп)
             if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
                 if (diffX > 0) {
-                    changeSlide(1); // Свайп влево -> следующая картинка
+                    changeSlide(1); 
                 } else {
-                    changeSlide(-1); // Свайп вправо -> предыдущая картинка
+                    changeSlide(-1); 
                 }
             }
         }, {passive: true});
@@ -888,7 +866,6 @@
 
             let currentPath = 'A';
             let currentStepA = 0;
-            let currentStepB = 0;
             let order = {
                 event: '', guests: 0, etages: '', style: '',
                 shapeType: 'classic_circle', shapeDetails: '',
@@ -1009,7 +986,6 @@
                 pathA.style.display = 'block';
                 pathB.style.display = 'none';
                 showStepA(0);
-                currentStepA = 0;
             });
             pathABtns[1].addEventListener('click', () => {
                 currentPath = 'B';
@@ -1141,7 +1117,7 @@
                         generateBtn.style.display = 'none';
                         sendBtn.style.display = 'block';
                     } catch (error) {
-                        alert('Erreur lors de la génération : ' + error.message);
+                        alert("Erreur lors de la génération : " + error.message);
                         console.error(error);
                     } finally {
                         generateBtn.textContent = 'Générer mon design';
@@ -1163,13 +1139,16 @@
                     document.querySelector('.constructor-wrapper').appendChild(resultDiv);
                 }
 
-                resultDiv.innerHTML = images.map((img, index) => `
+                let htmlContent = "";
+                images.forEach((img, index) => {
+                    let title = index === 0 ? "Option 1 : Votre design" : "Option 2 : Proposition de l'Atelier";
+                    htmlContent += `
                     <div style="text-align: center; background: var(--card-bg); padding: 15px; border-radius: 15px; border: 1px solid var(--border-gold-light);">
                         <img src="${img}" style="width: 100%; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" alt="Design ${index+1}" 
                              onclick="openSlider(window.generatedImages); changeSlide(${index});">
                         
                         <p style="margin-top: 10px; font-size: 0.9rem; font-weight: 600; color: var(--gold-accent);">
-                            ${index === 0 ? 'Option 1 : Votre design' : 'Option 2 : Proposition de l\\'Atelier'}
+                            ${title}
                         </p>
                         <p style="font-size: 0.7rem; opacity: 0.6; margin-bottom: 10px;">(Cliquez sur l'image pour zoomer)</p>
                         
@@ -1177,13 +1156,17 @@
                             <input type="radio" name="selected-design" value="${index}" ${index === 0 ? 'checked' : ''} style="transform: scale(1.2);">
                             <span style="font-size: 0.85rem; font-weight: 600;">Choisir ce design</span>
                         </label>
-                    </div>
-                `).join('') + `
+                    </div>`;
+                });
+
+                htmlContent += `
                     <div style="grid-column: 1 / -1; text-align: center; margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-gold-light); font-size: 0.75rem; opacity: 0.8; line-height: 1.6; background: rgba(176, 141, 87, 0.05); padding: 15px; border-radius: 10px;">
                         ⚖️ <strong>Propriété intellectuelle :</strong> Ces croquis numériques sont la propriété exclusive de l'Atelier Victoria.<br><br>
                         ⚠️ <strong>Note :</strong> L'intelligence artificielle peut parfois simplifier ou omettre une partie du texte. Ne vous inquiétez pas, notre Chef réalisera votre inscription avec une précision parfaite sur le vrai gâteau.
                     </div>
                 `;
+                
+                resultDiv.innerHTML = htmlContent;
 
                 document.querySelectorAll('input[name="selected-design"]').forEach(radio => {
                     radio.addEventListener('change', (e) => {
