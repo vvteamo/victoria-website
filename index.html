@@ -221,15 +221,26 @@
             border-color: var(--text-color);
         }
         
+        /* ЖЕЛЕЗОБЕТОННАЯ СЕТКА ГАЛЕРЕИ */
         .gallery-grid {
             display: grid;
-            /* Изменил на 250px для гарантии работы на самых узких экранах */
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(3, 1fr); /* Строго 3 колонки на ПК */
             gap: 30px;
         }
         
+        @media (max-width: 900px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 колонки на планшетах */
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .gallery-grid {
+                grid-template-columns: 1fr; /* 1 колонка на телефонах */
+            }
+        }
+        
         .img-box {
-            /* ЖЕЛЕЗОБЕТОННЫЕ КВАДРАТЫ ДЛЯ ЛЮБОГО МОБИЛЬНИКА */
             position: relative;
             width: 100%;
             padding-bottom: 100%;
@@ -785,14 +796,13 @@
         
         let currentImages = []; let currentIndex = 0;
         
-        // --- ИДЕАЛЬНЫЙ ФИЛЬТР БЕЗ ОШИБОК НА ТЕЛЕФОНЕ ---
         function filterGallery(category, btnElement) { 
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); 
             if(btnElement) btnElement.classList.add('active'); 
             
             document.querySelectorAll('.gallery-item').forEach(item => { 
                 if (category === 'all' || item.classList.contains(category)) {
-                    item.style.display = ''; // Сбрасываем дисплей на дефолт (возвращает блок или флекс)
+                    item.style.display = ''; 
                 } else {
                     item.style.display = 'none'; 
                 }
