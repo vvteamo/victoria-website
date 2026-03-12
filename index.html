@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <title>Victoria | Haute Pâtisserie Nice - Gâteaux de Mariage & Créations sur Mesure</title>
     <meta name="description" content="Découvrez l'excellence de Victoria, Maître Pâtissier à Nice. Gâteaux de mariage couture, créations personnalisées et pâtisserie artisanale haut de gamme sur la Côte d'Azur.">
@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
-        /* ========== СВЕТЛАЯ ТЕМА (по умолчанию) ========== */
+        /* ========== СВЕТЛАЯ ТЕМА ========== */
         :root {
             --bg-color: #f2efe8;
             --text-color: #3e332a;
@@ -46,14 +46,19 @@
             padding: 0;
             box-sizing: border-box;
             scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent; /* Убирает синее мигание при клике на мобильных */
         }
         
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden; /* Запрет горизонтального скролла и дрожания */
+        }
+
         body {
             font-family: 'Montserrat', sans-serif;
             color: var(--text-color);
             background-color: var(--bg-color);
             line-height: 1.6;
-            overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         
@@ -79,6 +84,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
         
         .logo-img {
@@ -112,6 +118,21 @@
             transition: all 0.3s ease;
         }
         
+        /* Адаптация шапки для мобильных */
+        @media (max-width: 768px) {
+            .logo-img { height: 50px; }
+            nav ul { gap: 15px; }
+            nav a { font-size: 0.65rem; }
+            h2 { font-size: 2rem !important; margin-bottom: 30px !important; }
+        }
+
+        @media (max-width: 480px) {
+            .nav-flex { flex-wrap: wrap; justify-content: center; padding-top: 5px;}
+            .theme-toggle { position: absolute; right: 0; top: 5px; }
+            nav ul { margin-top: 10px; width: 100%; justify-content: center; gap: 12px;}
+            nav a { font-size: 0.6rem; font-weight: 600; }
+        }
+        
         section {
             padding: 100px 0;
             opacity: 0;
@@ -124,6 +145,16 @@
             transform: translateY(0);
         }
         
+        /* Главный экран: 100dvh спасает от дергания на смартфонах */
+        #accueil {
+            height: 100vh; 
+            height: 100dvh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center;
+        }
+
         h2 {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
@@ -204,6 +235,7 @@
             background: #e0ddd5;
             border-radius: 4px;
             cursor: pointer;
+            position: relative;
         }
         
         .img-box img {
@@ -267,25 +299,27 @@
             border: none;
         }
         
+        /* СЛАЙДЕР И ГАЛЕРЕЯ */
         #slider-overlay {
             position: fixed;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            background:rgba(0,0,0,0.95);
-            display:none;
-            flex-direction:column;
-            justify-content:center;
-            align-items:center;
-            z-index:3000;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            touch-action: none; /* Блокируем стандартный скролл при открытой галерее */
         }
         
         #slider-img {
-            max-width: 90%;
+            max-width: 95%;
             max-height: 75vh;
             border-radius: 4px;
             object-fit: contain;
+            user-select: none;
+            -webkit-user-select: none;
         }
         
         .slider-nav {
@@ -299,18 +333,21 @@
             font-size: 2.5rem;
             cursor: pointer;
             user-select: none;
+            -webkit-user-select: none;
+            padding: 10px 20px;
         }
         
         .close-slider {
             position: absolute;
             top: 20px;
-            right: 30px;
+            right: 25px;
             color: #fff;
             font-size: 3rem;
             cursor: pointer;
+            z-index: 3010;
         }
 
-        /* Стили для конструктора */
+        /* КОНСТРУКТОР */
         .constructor-option {
             background: transparent;
             border: 1px solid var(--gold-accent);
@@ -377,7 +414,6 @@
             color: var(--text-color);
         }
 
-        /* Пояснительный блок */
         .info-steps {
             display: flex;
             flex-wrap: wrap;
@@ -411,6 +447,7 @@
             gap: 20px;
             margin-top: 10px;
             margin-bottom: 30px;
+            flex-wrap: wrap;
         }
         .quick-contacts .btn {
             padding: 10px 25px;
@@ -418,9 +455,8 @@
         }
         
         @media (max-width: 600px) {
-            .constructor-option {
-                min-width: 100%;
-            }
+            .constructor-option { min-width: 100%; }
+            #accueil h1 { font-size: 2.2rem !important; }
         }
     </style>
 </head>
@@ -441,7 +477,7 @@
     </header>
 
     <main>
-        <section id="accueil" style="height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; opacity:1; transform:none;">
+        <section id="accueil" style="opacity:1; transform:none;">
             <div>
                 <h1 style="font-family:'Playfair Display'; font-size:3.5rem;">Atelier Pâtisserie Nice</h1>
                 <p style="letter-spacing:4px; text-transform:uppercase; font-size:0.9rem; margin-top:10px;">Par Victoria • Haute Pâtisserie sur mesure</p>
@@ -452,7 +488,7 @@
         <section id="about" class="container">
             <div class="about-grid">
                 <div>
-                    <img src="img/victoria-photo.png" alt="Victoria Maître Pâtissier" style="width:100%; border-radius:4px;">
+                    <img src="img/victoria-photo.png" alt="Victoria Maître Pâtissière" style="width:100%; border-radius:4px;">
                     <div style="margin-top:30px; padding:20px; border:1px solid var(--gold-accent); text-align:center;">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="var(--gold-accent)" style="margin-bottom:10px;"><path d="M12 2l2.4 7.4h7.6l-6.2 4.5 2.4 7.4-6.2-4.5-6.2 4.5 2.4-7.4-6.2-4.5h7.6z"/></svg>
                         <p style="font-weight:600; text-transform:uppercase; font-size:0.8rem;">Titre de Maître Pâtissier</p>
@@ -730,7 +766,9 @@
         </section>
     </main>
 
-    <div id="slider-overlay" onclick="closeSlider()"><span class="close-slider">×</span><img id="slider-img" src="">
+    <div id="slider-overlay" onclick="closeSlider()">
+        <span class="close-slider" onclick="closeSlider()">×</span>
+        <img id="slider-img" src="" onclick="event.stopPropagation()">
         <div class="slider-nav" onclick="event.stopPropagation()">
             <span class="nav-arrow" onclick="changeSlide(-1)">❮</span>
             <span class="nav-arrow" onclick="changeSlide(1)">❯</span>
@@ -740,11 +778,60 @@
     <script>
         const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); }); }, { threshold: 0.1 });
         document.querySelectorAll('section').forEach(s => observer.observe(s));
+        
         let currentImages = []; let currentIndex = 0;
-        function filterGallery(category) { document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); if(event) event.currentTarget.classList.add('active'); document.querySelectorAll('.gallery-item').forEach(item => { if (category === 'all' || item.classList.contains(category)) item.style.display = 'block'; else item.style.display = 'none'; }); }
-        function openSlider(imgs) { currentImages = imgs; currentIndex = 0; document.getElementById('slider-img').src = currentImages[currentIndex]; document.getElementById('slider-overlay').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function changeSlide(dir) { currentIndex += dir; if (currentIndex < 0) currentIndex = currentImages.length - 1; if (currentIndex >= currentImages.length) currentIndex = 0; document.getElementById('slider-img').src = currentImages[currentIndex]; }
-        function closeSlider() { document.getElementById('slider-overlay').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        
+        function filterGallery(category) { 
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); 
+            if(event) event.currentTarget.classList.add('active'); 
+            document.querySelectorAll('.gallery-item').forEach(item => { 
+                if (category === 'all' || item.classList.contains(category)) item.style.display = 'block'; else item.style.display = 'none'; 
+            }); 
+        }
+        
+        function openSlider(imgs) { 
+            currentImages = imgs; currentIndex = 0; 
+            document.getElementById('slider-img').src = currentImages[currentIndex]; 
+            document.getElementById('slider-overlay').style.display = 'flex'; 
+            document.body.style.overflow = 'hidden'; 
+        }
+        
+        function changeSlide(dir) { 
+            currentIndex += dir; 
+            if (currentIndex < 0) currentIndex = currentImages.length - 1; 
+            if (currentIndex >= currentImages.length) currentIndex = 0; 
+            document.getElementById('slider-img').src = currentImages[currentIndex]; 
+        }
+        
+        function closeSlider() { 
+            document.getElementById('slider-overlay').style.display = 'none'; 
+            document.body.style.overflow = 'auto'; 
+        }
+
+        // --- ЛОГИКА СВАЙПОВ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ ---
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const sliderOverlay = document.getElementById('slider-overlay');
+
+        sliderOverlay.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        sliderOverlay.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, {passive: true});
+
+        function handleSwipe() {
+            if (!currentImages || currentImages.length === 0) return;
+            const swipeThreshold = 50; // Минимальная длина свайпа в пикселях
+            if (touchEndX < touchStartX - swipeThreshold) {
+                changeSlide(1); // Свайп влево -> следующая
+            }
+            if (touchEndX > touchStartX + swipeThreshold) {
+                changeSlide(-1); // Свайп вправо -> предыдущая
+            }
+        }
 
         (function() {
             const pathABtns = document.querySelectorAll('#pathA-btn, #pathB-btn');
@@ -760,15 +847,9 @@
             let currentStepA = 0;
             let currentStepB = 0;
             let order = {
-                event: '',
-                guests: 0,
-                etages: '',
-                style: '',
-                shapeType: 'classic_circle',
-                shapeDetails: '',
-                inscription: '',
-                details: '',
-                date: ''
+                event: '', guests: 0, etages: '', style: '',
+                shapeType: 'classic_circle', shapeDetails: '',
+                inscription: '', details: '', date: ''
             };
 
             const stepsA = ['stepA-1', 'stepA-2', 'stepA-3', 'stepA-4', 'stepA-4-1', 'stepA-5', 'stepA-6', 'stepA-7'];
@@ -795,9 +876,7 @@
                 }
             }
 
-            function validateGuests(value) {
-                return parseInt(value) >= 6;
-            }
+            function validateGuests(value) { return parseInt(value) >= 6; }
 
             function updateEtages(guests) {
                 const container = document.getElementById('etages-options');
@@ -1068,7 +1147,6 @@
                 window.selectedDesignIndex = 0;
             }
 
-            // --- КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Добавлены поля Date и Guests ---
             sendBtn.addEventListener('click', async () => {
                 const name = document.getElementById('client-name').value;
                 const contact = document.getElementById('client-contact').value;
@@ -1102,7 +1180,6 @@
                 sendBtn.textContent = 'Envoi en cours...';
                 sendBtn.disabled = true;
 
-                // ДОБАВЛЕНО guests и date
                 const payload = {
                     image_base64: selectedImage,
                     name: name,
