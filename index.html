@@ -906,11 +906,13 @@
                 const container = document.getElementById('etages-options');
                 container.innerHTML = '';
                 const options = [];
+                
                 if (guests >= 6) options.push('1 étage');
-                if (guests >= 15) options.push('2 étages');
+                if (guests >= 12) options.push('2 étages');
                 if (guests >= 25) options.push('3 étages');
-                if (guests >= 35) options.push('4 étages');
+                if (guests >= 40) options.push('4 étages');
                 if (guests >= 50) options.push('5 étages');
+                
                 options.forEach(text => {
                     const btn = document.createElement('button');
                     btn.className = 'constructor-option';
@@ -924,6 +926,7 @@
                     });
                     container.appendChild(btn);
                 });
+                
                 const btnSpecial = document.createElement('button');
                 btnSpecial.className = 'constructor-option';
                 btnSpecial.textContent = 'Forme spéciale (3D, chiffres)';
