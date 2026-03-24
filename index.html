@@ -352,7 +352,7 @@
             border-radius: 50%;
         }
 
-        /* НОВЫЕ КАРТОЧКИ ИНСТРУКЦИЙ */
+        /* КАРТОЧКИ ИНСТРУКЦИЙ */
         .intro-cards {
             display: flex;
             gap: 20px;
@@ -624,8 +624,8 @@
 
                 <div class="intro-cards" id="intro-cards-section">
                     <div class="card-path" id="pathA-btn">
-                        <h4>✨ La Magie de l'IA</h4>
-                        <p>Répondez à quelques questions et notre intelligence artificielle dessinera 2 esquisses uniques de votre gâteau idéal.</p>
+                        <h4>✨ Visualisez votre Rêve</h4>
+                        <p>Décrivez vos envies et notre assistant intelligent dessinera l'esquisse de votre gâteau. Notre Maître Pâtissier lui donnera ensuite vie avec un savoir-faire 100% artisanal.</p>
                         <button class="btn" style="background: var(--gold-accent); color: white; width: 100%;">Créer de zéro</button>
                     </div>
                     <div class="card-path" id="pathB-btn">
@@ -739,7 +739,7 @@
                             <div id="price-estimation-b" style="display: none; margin-top: 15px; padding: 15px; background: rgba(176, 141, 87, 0.1); border-radius: 10px; text-align: center; border: 1px solid var(--border-gold-light);">
                                 <h4 style="color: var(--gold-accent); font-size: 1.1rem; margin-bottom: 5px;">Estimation budgétaire</h4>
                                 <p style="font-size: 1.3rem; font-weight: 600;" id="price-val-b">à partir de 50 €*</p>
-                                <p style="font-size: 0.7rem; opacity: 0.7; margin-top: 5px;">*Basé sur 8€/part. Les créations en pâte à sucre ou décors 3D complexes sont à partir de 10€/part. Le prix final sera confirmé par l'Atelier.</p>
+                                <p style="font-size: 0.7rem; opacity: 0.7; margin-top: 5px;">*Basé sur un tarif standard de 8€/part. Les créations en pâte à sucre ou décors 3D complexes sont à partir de 10€/part. L'Atelier vous confirmera le tarif final exact.</p>
                             </div>
 
                             <label style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem;">
@@ -955,7 +955,6 @@
 
             function validateGuests(value) { return parseInt(value) >= 6; }
 
-            // ОБНОВЛЕННАЯ ЛОГИКА ЭТАЖЕЙ ОТ ШЕФА
             function updateEtages(guests) {
                 const container = document.getElementById('etages-options');
                 container.innerHTML = '';
@@ -994,14 +993,6 @@
                 container.appendChild(btnSpecial);
             }
 
-            // РАСЧЕТ ПРИМЕРНОЙ СТОИМОСТИ
-            function updatePriceEstimation() {
-                if(order.guests >= 6) {
-                    let price = Math.max(50, order.guests * 8);
-                    document.getElementById('price-val-a').textContent = `à partir de ${price} €*`;
-                }
-            }
-
             function updateNextButtonState() {
                 if (currentPath === 'A') {
                     if (currentStepA === 0) {
@@ -1015,10 +1006,6 @@
                         } else {
                             errorDiv.style.display = 'none';
                             nextBtn.disabled = guests < 6;
-                        }
-                        if (guests >= 6) {
-                            order.guests = guests;
-                            updatePriceEstimation();
                         }
                     } else if (currentStepA === 2) {
                         nextBtn.disabled = !order.etages;
@@ -1075,7 +1062,19 @@
                 document.getElementById('limit-info').style.display = 'none';
             });
 
-            // Калькулятор для пути B в реальном времени
+            // Калькулятор для пути A
+            document.getElementById('guests-input').addEventListener('input', function(e) {
+                const guests = parseInt(e.target.value);
+                if(guests >= 6) {
+                    let price = Math.max(50, guests * 8);
+                    document.getElementById('price-val-a').textContent = `à partir de ${price} €*`;
+                    order.guests = guests;
+                } else {
+                    document.getElementById('price-val-a').textContent = `à partir de 50 €*`;
+                }
+            });
+
+            // Калькулятор для пути B
             document.getElementById('upload-guests').addEventListener('input', function(e) {
                 const guests = parseInt(e.target.value);
                 if(guests >= 6) {
