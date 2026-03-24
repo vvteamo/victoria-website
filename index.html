@@ -136,11 +136,10 @@
             nav a { font-size: 0.6rem; font-weight: 600; }
         }
         
-        /* БРОНЕБОЙНЫЕ СЕКЦИИ (Больше никакой невидимости) */
         section {
             padding: 100px 0;
-            opacity: 1; /* Всегда видим */
-            transform: none; /* Никаких сдвигов */
+            opacity: 1;
+            transform: none;
         }
         
         h2 {
@@ -211,23 +210,17 @@
             border-color: var(--text-color);
         }
         
-        /* ЖЕЛЕЗОБЕТОННАЯ СЕТКА ГАЛЕРЕИ */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 колонки на ПК */
+            grid-template-columns: repeat(3, 1fr);
             gap: 30px;
         }
         
         @media (max-width: 900px) {
-            .gallery-grid {
-                grid-template-columns: repeat(2, 1fr); /* 2 колонки на планшетах */
-            }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
         }
-        
         @media (max-width: 600px) {
-            .gallery-grid {
-                grid-template-columns: 1fr; /* 1 колонка на телефонах */
-            }
+            .gallery-grid { grid-template-columns: 1fr; }
         }
         
         .img-box {
@@ -304,7 +297,6 @@
             border: none;
         }
         
-        /* СЛАЙДЕР И ГАЛЕРЕЯ (Идеально для зума) */
         #slider-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -315,7 +307,7 @@
             justify-content: center;
             align-items: center;
             z-index: 3000;
-            overflow: auto; /* Позволяет скроллить при сильном увеличении */
+            overflow: auto;
         }
         
         #slider-img {
@@ -324,7 +316,6 @@
             border-radius: 4px;
             object-fit: contain;
             margin: auto;
-            /* Убрали запрет на зум! */
         }
         
         .slider-nav {
@@ -359,6 +350,41 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
+        }
+
+        /* НОВЫЕ КАРТОЧКИ ИНСТРУКЦИЙ */
+        .intro-cards {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        .card-path {
+            background: var(--card-bg);
+            border: 1px solid var(--border-gold-light);
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            flex: 1 1 300px;
+            max-width: 400px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+        }
+        .card-path:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold-accent);
+        }
+        .card-path h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--gold-accent);
+        }
+        .card-path p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-bottom: 25px;
+            min-height: 60px;
         }
 
         /* КОНСТРУКТОР */
@@ -578,12 +604,12 @@
                 <div class="step-item">
                     <div class="step-icon">⚡</div>
                     <div class="step-title">Générez</div>
-                    <p>Obtenez 2 designs uniques</p>
+                    <p>Obtenez 2 designs uniques par l'IA</p>
                 </div>
                 <div class="step-item">
                     <div class="step-icon">📲</div>
                     <div class="step-title">Envoyez</div>
-                    <p>Victoria reçoit votre commande</p>
+                    <p>L'Atelier reçoit votre commande</p>
                 </div>
             </div>
             <div class="quick-contacts">
@@ -594,14 +620,22 @@
             <div class="constructor-wrapper" style="margin-top: 0; padding: 40px; background: rgba(176, 141, 87, 0.03); border-radius: 20px; border: 1px solid rgba(176, 141, 87, 0.15);">
                 
                 <h3 style="font-size: 2rem; margin-bottom: 10px; color: var(--gold-accent); text-align: center;">✨ Créez votre gâteau idéal</h3>
-                <p style="font-size: 0.9rem; max-width: 600px; margin: 0 auto 30px auto; opacity: 0.7; text-align: center;">Choisissez votre manière de commencer</p>
+                <p style="font-size: 0.9rem; max-width: 600px; margin: 0 auto 30px auto; opacity: 0.7; text-align: center;">Comment souhaitez-vous commencer ?</p>
 
-                <div style="display: flex; gap: 15px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap;">
-                    <button id="pathA-btn" class="btn" style="background: var(--gold-accent); color: white; padding: 12px 25px;">1. Créer étape par étape</button>
-                    <button id="pathB-btn" class="btn" style="background: transparent; border: 1px solid var(--text-color); color: var(--text-color); padding: 12px 25px;">2. Proposer une photo</button>
+                <div class="intro-cards" id="intro-cards-section">
+                    <div class="card-path" id="pathA-btn">
+                        <h4>✨ La Magie de l'IA</h4>
+                        <p>Répondez à quelques questions et notre intelligence artificielle dessinera 2 esquisses uniques de votre gâteau idéal.</p>
+                        <button class="btn" style="background: var(--gold-accent); color: white; width: 100%;">Créer de zéro</button>
+                    </div>
+                    <div class="card-path" id="pathB-btn">
+                        <h4>📸 Votre Propre Idée</h4>
+                        <p>Vous avez déjà une photo d'inspiration (Pinterest, Instagram) ? Téléchargez-la directement pour obtenir un devis de l'Atelier.</p>
+                        <button class="btn" style="background: transparent; border: 1px solid var(--text-color); color: var(--text-color); width: 100%;">Télécharger ma photo</button>
+                    </div>
                 </div>
 
-                <div id="pathA" class="constructor-path">
+                <div id="pathA" class="constructor-path" style="display: none;">
                     <div class="constructor-step" id="stepA-1">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">1. Type d'événement</h4>
                         <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
@@ -617,8 +651,8 @@
                     <div class="constructor-step" id="stepA-2" style="display: none;">
                         <h4 style="font-size: 1.3rem; margin-bottom: 10px;">2. Nombre d'invités</h4>
                         <p style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 15px;">Nos créations sur mesure sont conçues pour les réunions de 6 personnes et plus.</p>
-                        <input type="number" id="guests-input" class="guests-input" min="1" placeholder="Entrez le nombre" style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; max-width: 200px; margin: 0 auto; font-family: 'Montserrat', sans-serif;">
-                        <div id="guests-error" class="error-message" style="color: #c00; font-size: 0.8rem; margin-top: 10px; display: none;">Les commandes sont acceptées à partir de 6 personnes</div>
+                        <input type="number" id="guests-input" class="guests-input" min="6" placeholder="Entrez le nombre" style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; max-width: 200px; margin: 0 auto; font-family: 'Montserrat', sans-serif;">
+                        <div id="guests-error" class="error-message" style="display: none;">Les commandes sont acceptées à partir de 6 personnes</div>
                     </div>
 
                     <div class="constructor-step" id="stepA-3" style="display: none;">
@@ -650,7 +684,7 @@
                             <input type="text" id="number-value" placeholder="Entrez le chiffre (ex : 30)" style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; font-family: 'Montserrat', sans-serif;">
                         </div>
                         <div id="other-shape-note" style="display: none; margin-top: 15px;">
-                            <p style="font-size: 0.9rem; opacity: 0.7;">Décrivez la forme souhaitée dans le champ "Détails pour le Chef" à l'étape suivante. (Les formes complexes peuvent ne pas être parfaitement reproduites.)</p>
+                            <p style="font-size: 0.9rem; opacity: 0.7;">Décrivez la forme souhaitée dans le champ "Détails pour l'Atelier" à l'étape suivante.</p>
                         </div>
                     </div>
 
@@ -661,7 +695,7 @@
                     </div>
 
                     <div class="constructor-step" id="stepA-6" style="display: none;">
-                        <h4 style="font-size: 1.3rem; margin-bottom: 10px;">6. Détails pour le Chef</h4>
+                        <h4 style="font-size: 1.3rem; margin-bottom: 10px;">6. Détails pour l'Atelier</h4>
                         <textarea id="details-input" rows="3" placeholder="Décrivez vos souhaits (couleur, décors, etc.)" style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 10px; font-family: 'Montserrat', sans-serif; resize: vertical;"></textarea>
                     </div>
 
@@ -675,7 +709,7 @@
                 <div id="pathB" class="constructor-path" style="display: none;">
                     <div style="max-width: 600px; margin: 0 auto;">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Proposez votre propre design</h4>
-                        <p style="margin-bottom: 20px;">Téléchargez une photo de votre inspiration et ajoutez une description. Victoria l'étudiera et vous recontactera.</p>
+                        <p style="margin-bottom: 20px;">Téléchargez une photo de votre inspiration et ajoutez une description. L'Atelier l'étudiera et vous recontactera.</p>
                         
                         <div style="display: flex; flex-direction: column; gap: 15px;">
                             <input type="text" id="upload-name" placeholder="Votre nom" required style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; font-family: 'Montserrat', sans-serif;">
@@ -687,7 +721,7 @@
 
                             <div>
                                 <input type="number" id="upload-guests" min="6" placeholder="Nombre d'invités (minimum 6)" required style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; width: 100%; font-family: 'Montserrat', sans-serif;">
-                                <div id="upload-guests-error" class="error-message" style="color: #c00; font-size: 0.8rem; margin-top: 5px; display: none;">Minimum 6 personnes</div>
+                                <div id="upload-guests-error" class="error-message" style="display: none;">Minimum 6 personnes</div>
                             </div>
 
                             <div>
@@ -702,11 +736,17 @@
                                 <p style="font-size: 0.8rem; opacity: 0.6;">Formats acceptés : PNG, JPG (max 10 Mo)</p>
                             </div>
                             
+                            <div id="price-estimation-b" style="display: none; margin-top: 15px; padding: 15px; background: rgba(176, 141, 87, 0.1); border-radius: 10px; text-align: center; border: 1px solid var(--border-gold-light);">
+                                <h4 style="color: var(--gold-accent); font-size: 1.1rem; margin-bottom: 5px;">Estimation budgétaire</h4>
+                                <p style="font-size: 1.3rem; font-weight: 600;" id="price-val-b">à partir de 50 €*</p>
+                                <p style="font-size: 0.7rem; opacity: 0.7; margin-top: 5px;">*Basé sur 8€/part. Les créations en pâte à sucre ou décors 3D complexes sont à partir de 10€/part. Le prix final sera confirmé par l'Atelier.</p>
+                            </div>
+
                             <label style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem;">
                                 <input type="checkbox" id="upload-consent" required> J'accepte le traitement de mes données pour être recontacté.
                             </label>
                             
-                            <button id="upload-submit" class="btn" style="background: var(--gold-accent); margin-top: 20px;">Envoyer la proposition</button>
+                            <button id="upload-submit" class="btn" style="background: var(--gold-accent); margin-top: 20px;">Envoyer la proposition à l'Atelier</button>
                         </div>
                     </div>
                 </div>
@@ -720,26 +760,37 @@
                             <input type="text" id="client-contact" placeholder="Téléphone, E-mail ou WhatsApp" required>
                         </div>
                         <label style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem;">
-                            <input type="checkbox" id="rgpd-consent" required> J'accepte le traitement de mes données pour être recontacté.
+                            <input type="checkbox" id="rgpd-consent" required> J'accepte le traitement de mes données pour être recontacté par l'Atelier.
                         </label>
                     </div>
                 </div>
 
-                <div id="limit-info" class="limit-info">
+                <div id="limit-info" class="limit-info" style="display: none;">
                     💡 3 générations gratuites par jour. Contactez-nous pour plus de designs.
                 </div>
 
                 <div style="display: flex; justify-content: space-between; margin-top: 30px; gap: 10px;">
-                    <button id="prev-btn" class="btn" style="background: transparent; border: 1px solid var(--text-color); color: var(--text-color); padding: 12px 25px; visibility: hidden;">← Retour</button>
-                    <button id="next-btn" class="btn" style="background: var(--text-color); padding: 12px 25px;">Suivant →</button>
+                    <button id="prev-btn" class="btn" style="background: transparent; border: 1px solid var(--text-color); color: var(--text-color); padding: 12px 25px; display: none;">← Retour</button>
+                    <button id="next-btn" class="btn" style="background: var(--text-color); padding: 12px 25px; display: none;">Suivant →</button>
                     <button id="generate-btn" class="btn" style="background: var(--gold-accent); padding: 12px 25px; display: none;">Générer mon design</button>
-                    <button id="send-btn" class="btn" style="background: var(--gold-accent); padding: 12px 25px; display: none;">Envoyer la commande à l'Atelier</button>
                 </div>
+                
                 <div id="loader-msg" style="display: none; text-align: center; font-size: 0.85rem; color: var(--gold-accent); margin-top: 20px; font-style: italic;">
                     ⏳ Génération de votre design en cours...<br>Cela peut prendre 1 à 3 minutes, veuillez patienter.
                 </div>
+                
+                <div id="final-action-block" style="display: none; margin-top: 30px;">
+                    <div id="price-estimation-a" style="margin-bottom: 20px; padding: 20px; background: rgba(176, 141, 87, 0.1); border-radius: 15px; text-align: center; border: 1px solid var(--border-gold-light);">
+                        <h4 style="color: var(--gold-accent); font-size: 1.2rem; margin-bottom: 5px;">Estimation budgétaire</h4>
+                        <p style="font-size: 1.5rem; font-weight: 600;" id="price-val-a">à partir de 50 €*</p>
+                        <p style="font-size: 0.75rem; opacity: 0.7; margin-top: 5px;">*Basé sur un tarif standard de 8€/part. Les créations en pâte à sucre ou décors 3D complexes sont à partir de 10€/part. L'Atelier vous confirmera le tarif final exact.</p>
+                    </div>
+                    <button id="send-btn" class="btn" style="background: var(--gold-accent); padding: 15px 30px; width: 100%; font-size: 1rem;">Envoyer la commande à l'Atelier</button>
+                </div>
+
             </div>
         </section>
+        
         <section id="testimonials" class="container">
             <h2>Témoignages</h2>
             <div class="testimonials-grid">
@@ -824,7 +875,6 @@
             document.getElementById('slider-overlay').style.display = 'none'; 
         }
 
-        // УМНЫЕ СВАЙПЫ С ПОДДЕРЖКОЙ ЗУМА
         let touchStartX = 0;
         let touchStartY = 0;
         let isZooming = false;
@@ -842,10 +892,8 @@
 
         sliderOverlay.addEventListener('touchend', e => {
             if (isZooming || e.touches.length > 0) return;
-            
             let touchEndX = e.changedTouches[0].screenX;
             let touchEndY = e.changedTouches[0].screenY;
-            
             let diffX = touchStartX - touchEndX;
             let diffY = touchStartY - touchEndY;
             
@@ -860,6 +908,7 @@
 
         (function() {
             const pathABtns = document.querySelectorAll('#pathA-btn, #pathB-btn');
+            const introCards = document.getElementById('intro-cards-section');
             const pathA = document.getElementById('pathA');
             const pathB = document.getElementById('pathB');
             const prevBtn = document.getElementById('prev-btn');
@@ -867,8 +916,9 @@
             const generateBtn = document.getElementById('generate-btn');
             const sendBtn = document.getElementById('send-btn');
             const contactForm = document.getElementById('contact-form');
+            const finalActionBlock = document.getElementById('final-action-block');
 
-            let currentPath = 'A';
+            let currentPath = '';
             let currentStepA = 0;
             let order = {
                 event: '', guests: 0, etages: '', style: '',
@@ -877,6 +927,7 @@
             };
 
             const stepsA = ['stepA-1', 'stepA-2', 'stepA-3', 'stepA-4', 'stepA-4-1', 'stepA-5', 'stepA-6', 'stepA-7'];
+            
             function showStepA(index) {
                 stepsA.forEach((id, i) => {
                     document.getElementById(id).style.display = i === index ? 'block' : 'none';
@@ -887,21 +938,24 @@
             function updateNavButtons(path, index) {
                 const totalSteps = path === 'A' ? 8 : 0;
                 if (path === 'A') {
-                    prevBtn.style.visibility = index === 0 ? 'hidden' : 'visible';
+                    prevBtn.style.display = 'block';
                     if (index === totalSteps - 1) {
                         contactForm.style.display = 'block';
                         nextBtn.style.display = 'none';
                         generateBtn.style.display = 'block';
+                        document.getElementById('limit-info').style.display = 'block';
                     } else {
                         contactForm.style.display = 'none';
                         nextBtn.style.display = 'block';
                         generateBtn.style.display = 'none';
+                        document.getElementById('limit-info').style.display = 'none';
                     }
                 }
             }
 
             function validateGuests(value) { return parseInt(value) >= 6; }
 
+            // ОБНОВЛЕННАЯ ЛОГИКА ЭТАЖЕЙ ОТ ШЕФА
             function updateEtages(guests) {
                 const container = document.getElementById('etages-options');
                 container.innerHTML = '';
@@ -940,6 +994,14 @@
                 container.appendChild(btnSpecial);
             }
 
+            // РАСЧЕТ ПРИМЕРНОЙ СТОИМОСТИ
+            function updatePriceEstimation() {
+                if(order.guests >= 6) {
+                    let price = Math.max(50, order.guests * 8);
+                    document.getElementById('price-val-a').textContent = `à partir de ${price} €*`;
+                }
+            }
+
             function updateNextButtonState() {
                 if (currentPath === 'A') {
                     if (currentStepA === 0) {
@@ -954,7 +1016,10 @@
                             errorDiv.style.display = 'none';
                             nextBtn.disabled = guests < 6;
                         }
-                        if (guests >= 6) order.guests = guests;
+                        if (guests >= 6) {
+                            order.guests = guests;
+                            updatePriceEstimation();
+                        }
                     } else if (currentStepA === 2) {
                         nextBtn.disabled = !order.etages;
                     } else if (currentStepA === 3) {
@@ -988,21 +1053,38 @@
                 });
             });
 
+            // ОБРАБОТЧИКИ КАРТОЧЕК НАЧАЛА
             pathABtns[0].addEventListener('click', () => {
+                introCards.style.display = 'none';
                 currentPath = 'A';
                 pathA.style.display = 'block';
                 pathB.style.display = 'none';
                 showStepA(0);
             });
+            
             pathABtns[1].addEventListener('click', () => {
+                introCards.style.display = 'none';
                 currentPath = 'B';
                 pathA.style.display = 'none';
                 pathB.style.display = 'block';
-                prevBtn.style.visibility = 'hidden';
+                prevBtn.style.display = 'block';
                 nextBtn.style.display = 'none';
                 generateBtn.style.display = 'none';
-                sendBtn.style.display = 'none';
+                finalActionBlock.style.display = 'none';
                 contactForm.style.display = 'none';
+                document.getElementById('limit-info').style.display = 'none';
+            });
+
+            // Калькулятор для пути B в реальном времени
+            document.getElementById('upload-guests').addEventListener('input', function(e) {
+                const guests = parseInt(e.target.value);
+                if(guests >= 6) {
+                    let price = Math.max(50, guests * 8);
+                    document.getElementById('price-val-b').textContent = `à partir de ${price} €*`;
+                    document.getElementById('price-estimation-b').style.display = 'block';
+                } else {
+                    document.getElementById('price-estimation-b').style.display = 'none';
+                }
             });
 
             nextBtn.addEventListener('click', () => {
@@ -1030,12 +1112,23 @@
                     if (currentStepA > 0) {
                         currentStepA--;
                         showStepA(currentStepA);
+                    } else {
+                        // Возврат к выбору карточек
+                        introCards.style.display = 'flex';
+                        pathA.style.display = 'none';
+                        prevBtn.style.display = 'none';
+                        nextBtn.style.display = 'none';
                     }
+                } else if (currentPath === 'B') {
+                    introCards.style.display = 'flex';
+                    pathB.style.display = 'none';
+                    prevBtn.style.display = 'none';
                 }
             });
 
             window.generatedImages = [];
             window.selectedDesignIndex = 0;
+            window.customImageBase64 = null; // Для 3-го квадрата
 
             generateBtn.addEventListener('click', async () => {
                 const clientName = document.getElementById('client-name')?.value;
@@ -1056,7 +1149,7 @@
                     const generationKey = `generations_${today}`;
                     let count = parseInt(localStorage.getItem(generationKey) || '0');
                     if (count >= 3) {
-                        alert("Vous avez atteint la limite de 3 générations gratuites aujourd'hui. Contactez-nous directement pour plus de designs.");
+                        alert("Vous avez atteint la limite de 3 générations gratuites aujourd'hui. L'Atelier reste à votre écoute sur WhatsApp !");
                         return;
                     }
                 }
@@ -1113,16 +1206,20 @@
                         const data = await response.json();
                         
                         if (!isAdmin) {
-                            const today = new Date().toDateString();
-                            const generationKey = `generations_${today}`;
+                            const todayStr = new Date().toDateString();
+                            const generationKey = `generations_${todayStr}`;
                             let count = parseInt(localStorage.getItem(generationKey) || '0');
                             localStorage.setItem(generationKey, (count + 1).toString());
                         }
                         
                         window.generatedImages = data.images || [];
                         displayGeneratedImages(data.images);
+                        
                         generateBtn.style.display = 'none';
-                        sendBtn.style.display = 'block';
+                        document.getElementById('limit-info').style.display = 'none';
+                        prevBtn.style.display = 'none';
+                        finalActionBlock.style.display = 'block'; // Показываем блок с ценой и кнопкой отправки
+                        
                     } catch (error) {
                         alert("Erreur lors de la génération : " + error.message);
                         console.error(error);
@@ -1141,14 +1238,17 @@
                     resultDiv.id = 'generation-results';
                     resultDiv.style.marginTop = '20px';
                     resultDiv.style.display = 'grid';
-                    resultDiv.style.gridTemplateColumns = window.innerWidth <= 600 ? '1fr' : '1fr 1fr';
+                    resultDiv.style.gridTemplateColumns = window.innerWidth <= 900 ? '1fr' : '1fr 1fr 1fr';
                     resultDiv.style.gap = '20px';
-                    document.querySelector('.constructor-wrapper').appendChild(resultDiv);
+                    // Вставляем результаты ПЕРЕД финальным блоком с кнопкой отправки
+                    const wrapper = document.querySelector('.constructor-wrapper');
+                    wrapper.insertBefore(resultDiv, finalActionBlock);
                 }
 
                 let htmlContent = "";
+                // 1 и 2 квадраты (генерация)
                 images.forEach((img, index) => {
-                    let title = index === 0 ? "Option 1 : Votre design" : "Option 2 : Proposition de l'Atelier";
+                    let title = index === 0 ? "Option 1 : Votre design" : "Option 2 : Variante";
                     htmlContent += `
                     <div style="text-align: center; background: var(--card-bg); padding: 15px; border-radius: 15px; border: 1px solid var(--border-gold-light);">
                         <img src="${img}" style="width: 100%; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" alt="Design ${index+1}" 
@@ -1157,7 +1257,7 @@
                         <p style="margin-top: 10px; font-size: 0.9rem; font-weight: 600; color: var(--gold-accent);">
                             ${title}
                         </p>
-                        <p style="font-size: 0.7rem; opacity: 0.6; margin-bottom: 10px;">(Cliquez sur l'image pour zoomer)</p>
+                        <p style="font-size: 0.7rem; opacity: 0.6; margin-bottom: 10px;">(Cliquez pour zoomer)</p>
                         
                         <label style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: 5px; padding: 10px 20px; background: var(--bg-color); border-radius: 30px; cursor: pointer; border: 1px solid var(--border-light);">
                             <input type="radio" name="selected-design" value="${index}" ${index === 0 ? 'checked' : ''} style="transform: scale(1.2);">
@@ -1166,14 +1266,64 @@
                     </div>`;
                 });
 
+                // 3 квадрат (Свое фото)
                 htmlContent += `
-                    <div style="grid-column: 1 / -1; text-align: center; margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-gold-light); font-size: 0.75rem; opacity: 0.8; line-height: 1.6; background: rgba(176, 141, 87, 0.05); padding: 15px; border-radius: 10px;">
-                        ⚖️ <strong>Propriété intellectuelle :</strong> Ces croquis numériques sont la propriété exclusive de l'Atelier Victoria.<br><br>
-                        ⚠️ <strong>Note :</strong> L'intelligence artificielle peut parfois simplifier ou omettre une partie du texte. Ne vous inquiétez pas, notre Chef réalisera votre inscription avec une précision parfaite sur le vrai gâteau.
+                    <div id="custom-upload-box" style="text-align: center; background: var(--card-bg); padding: 15px; border-radius: 15px; border: 2px dashed var(--gold-accent); cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 250px; position: relative;">
+                        <div id="custom-upload-content">
+                            <span style="font-size: 3rem; color: var(--gold-accent);">+</span>
+                            <p style="margin-top: 10px; font-size: 0.9rem; font-weight: 600; color: var(--gold-accent);">Option 3 : Votre photo</p>
+                            <p style="font-size: 0.7rem; opacity: 0.7; padding: 0 10px;">Vous n'avez pas trouvé l'idéal ? Ajoutez votre propre inspiration ici.</p>
+                        </div>
+                        <img id="custom-design-preview" style="display:none; width:100%; border-radius:10px; margin-bottom:15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                        <input type="file" id="custom-design-file" accept="image/*" style="display: none;">
+                        
+                        <label id="custom-radio-label" style="display: none; align-items: center; justify-content: center; gap: 8px; margin-top: auto; padding: 10px 20px; background: var(--bg-color); border-radius: 30px; cursor: pointer; border: 1px solid var(--border-light); width: 80%;">
+                            <input type="radio" name="selected-design" value="2" style="transform: scale(1.2);">
+                            <span style="font-size: 0.85rem; font-weight: 600;">Utiliser ma photo</span>
+                        </label>
+                    </div>`;
+
+                htmlContent += `
+                    <div style="grid-column: 1 / -1; text-align: center; margin-top: 10px; padding-top: 20px; border-top: 1px solid var(--border-gold-light); font-size: 0.75rem; opacity: 0.8; line-height: 1.6;">
+                        ⚖️ <strong>Propriété intellectuelle :</strong> Ces croquis sont la propriété de l'Atelier Victoria.<br>
+                        ⚠️ L'IA peut simplifier certains textes. L'Atelier réalisera votre inscription parfaite sur le vrai gâteau.
                     </div>
                 `;
                 
                 resultDiv.innerHTML = htmlContent;
+
+                // Логика для 3-го квадрата
+                const customBox = document.getElementById('custom-upload-box');
+                const fileInput = document.getElementById('custom-design-file');
+                const previewImg = document.getElementById('custom-design-preview');
+                const contentDiv = document.getElementById('custom-upload-content');
+                const radioLabel = document.getElementById('custom-radio-label');
+
+                customBox.addEventListener('click', (e) => {
+                    // Не открывать окно файлов, если кликнули по радио-кнопке
+                    if (e.target.tagName !== 'INPUT') {
+                        fileInput.click();
+                    }
+                });
+
+                fileInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            window.customImageBase64 = event.target.result;
+                            previewImg.src = event.target.result;
+                            previewImg.style.display = 'block';
+                            contentDiv.style.display = 'none';
+                            radioLabel.style.display = 'inline-flex';
+                            customBox.style.border = '1px solid var(--border-gold-light)';
+                            // Автоматически выбираем эту опцию
+                            document.querySelector('input[value="2"]').checked = true;
+                            window.selectedDesignIndex = 2;
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                });
 
                 document.querySelectorAll('input[name="selected-design"]').forEach(radio => {
                     radio.addEventListener('change', (e) => {
@@ -1193,9 +1343,21 @@
                     return;
                 }
 
-                const designChoice = window.selectedDesignIndex === 0 ? 'Option 1' : 'Option 2';
-                const images = window.generatedImages || [];
-                const selectedImage = images[window.selectedDesignIndex];
+                let selectedImage = null;
+                let designChoice = '';
+
+                if (window.selectedDesignIndex === 2) {
+                    if (!window.customImageBase64) {
+                        alert("Veuillez d'abord télécharger votre photo.");
+                        return;
+                    }
+                    selectedImage = window.customImageBase64;
+                    designChoice = "Option 3 : Photo du client";
+                } else {
+                    const images = window.generatedImages || [];
+                    selectedImage = images[window.selectedDesignIndex];
+                    designChoice = window.selectedDesignIndex === 0 ? 'Option 1 (IA)' : 'Option 2 (IA)';
+                }
                 
                 if (!selectedImage) {
                     alert("Aucune image sélectionnée");
@@ -1203,7 +1365,7 @@
                 }
 
                 const orderDetails = 
-                    `- Chemin : Étape par étape\n` +
+                    `- Chemin : IA / Personnalisé\n` +
                     `- Événement : ${order.event || 'Non spécifié'}\n` +
                     `- Invités : ${order.guests || 0}\n` +
                     `- Étages : ${order.etages || 'Non spécifié'}\n` +
@@ -1239,7 +1401,9 @@
                         throw new Error(result.error || 'Erreur lors de l\'envoi');
                     }
 
-                    alert('Commande envoyée avec succès ! Victoria va vous contacter.');
+                    alert('Commande envoyée avec succès ! L\'Atelier va vous recontacter très vite.');
+                    // Перезагрузка страницы для очистки формы
+                    window.location.reload();
                 } catch (error) {
                     alert('Erreur lors de l\'envoi : ' + error.message);
                     console.error('Full error:', error);
@@ -1265,9 +1429,11 @@
                 uploadDateInput.setAttribute('min', minDateString);
             }
 
-            showStepA(0);
+            // Инициализация - показываем только карточки
+            document.getElementById('intro-cards-section').style.display = 'flex';
         })();
 
+        // Обработчик для старого пути B (если клиент сразу загружает фото в начале)
         const uploadBtn = document.getElementById('upload-submit');
         if (uploadBtn) {
             uploadBtn.addEventListener('click', async () => {
@@ -1280,15 +1446,13 @@
                 const consent = document.getElementById('upload-consent').checked;
 
                 if (!name || !contact || !guests || !date || !photo || !consent) {
-                    alert("Veuillez remplir tous les champs obligatoires (nom, contact, nombre d'invités, date, photo) et accepter le traitement des données.");
+                    alert("Veuillez remplir tous les champs obligatoires et accepter le traitement des données.");
                     return;
                 }
 
                 if (guests < 6) {
                     document.getElementById('upload-guests-error').style.display = 'block';
                     return;
-                } else {
-                    document.getElementById('upload-guests-error').style.display = 'none';
                 }
 
                 const selectedDate = new Date(date);
@@ -1319,21 +1483,15 @@
                     });
 
                     if (response.ok) {
-                        alert('Proposition envoyée avec succès ! Victoria va vous contacter.');
-                        document.getElementById('upload-name').value = '';
-                        document.getElementById('upload-contact').value = '';
-                        document.getElementById('upload-guests').value = '';
-                        document.getElementById('upload-date').value = '';
-                        document.getElementById('upload-description').value = '';
-                        document.getElementById('upload-photo').value = '';
-                        document.getElementById('upload-consent').checked = false;
+                        alert('Proposition envoyée avec succès ! L\'Atelier va vous recontacter.');
+                        window.location.reload();
                     } else {
                         alert('Erreur lors de l\'envoi. Veuillez réessayer.');
                     }
                 } catch (error) {
                     alert('Erreur réseau. Vérifiez votre connexion.');
                 } finally {
-                    uploadBtn.textContent = 'Envoyer la proposition';
+                    uploadBtn.textContent = 'Envoyer la proposition à l\'Atelier';
                     uploadBtn.disabled = false;
                 }
             });
@@ -1347,4 +1505,3 @@
     </script>
 </body>
 </html>
-
